@@ -8,4 +8,4 @@ if __name__ == "__main__":
     plt.scatter(X[:, 0], X[:, 1], c=y, cmap="brg")
     plt.show()
 
-    build_model(X)
+    build_model(X, y)

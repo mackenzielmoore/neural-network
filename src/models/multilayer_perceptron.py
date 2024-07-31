@@ -32,8 +32,40 @@ class Activation_Softmax:
         self.output = probabilities
 
 
-def build_model(X):
-    # n_inputs must be 2, as it uses coordinate data (x, y)
+# Base class for loss functions
+# Calculates the loss given the output and true labels
+class Loss:
+    def calculate(self, output, y):
+        # Compute the loss for each sample and average it
+        sample_losses = self.forward(output, y)
+        batch_loss = np.mean(sample_losses)
+        return batch_loss
+
+
+# Categorical Cross-Entropy Loss
+# Measures the performance of a classification model whose output is probabilities
+# y_pred is the predicted target class
+# y_true is the expected target class
+class Loss_Categorical_Cross_Entropy(Loss):
+    def forward(self, y_pred, y_true):
+        samples = len(y_pred)
+        # Clip predictions to prevent log(0) and numerical instability
+        y_pred_clipped = np.clip(y_pred, 1e-7, 1 - 1e-7)
+
+        # If true labels are in integer form, select the predicted probabilities of the true class
+        if len(y_true.shape) == 1:
+            correct_confidences = y_pred_clipped[range(samples), y_true]
+        # If true labels are one-hot encoded, sum the predicted probabilities of the true classes
+        elif len(y_true.shape) == 2:
+            correct_confidences = np.sum(y_pred_clipped * y_true, axis=1)
+        # Compute the negative log likelihood of the correct classes
+        negative_log_likelihoods = -np.log(correct_confidences)
+        return negative_log_likelihoods
+
+
+def build_model(X, y):
+    # Initialize layers
+    # Input layer: 2 features -> 3 neurons
     dense1 = Layer_Dense(2, 3)
     activation1 = Activation_ReLU()
 
@@ -41,12 +73,19 @@ def build_model(X):
     dense2 = Layer_Dense(3, 3)
     activation2 = Activation_Softmax()
 
-    # Forward pass
-    dense1.forward(X)
-    activation1.forward(dense1.output)
+    # Forward pass through the network
+    dense1.forward(X)  # Compute outputs for the first dense layer
+    activation1.forward(dense1.output)  # Apply ReLU activation
 
-    dense2.forward(activation1.output)
-    activation2.forward(dense2.output)
+    dense2.forward(activation1.output)  # Compute outputs for the second dense layer
+    activation2.forward(dense2.output)  # Apply softmax activation
 
-    # Print output
+    # Output the softmax probabilities for the first 5 samples
     print(activation2.output[:5])
+
+    # Compute the loss
+    loss_function = Loss_Categorical_Cross_Entropy()
+    loss = loss_function.calculate(activation2.output, y)
+
+    # Print the loss value
+    print("Loss:", loss)
