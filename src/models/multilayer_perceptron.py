@@ -3,31 +3,32 @@ import numpy as np
 np.random.seed(0)
 
 
-# Dense layer neurons
-# It's dense as the neurons of the layer are connected to every neuron of its preceding layer
+# Each neuron in this layer is connected to every neuron in the previous layer
 class Layer_Dense:
     def __init__(self, n_inputs, n_neurons):
+        # Initialize weights with small random values and biases with zeros
         self.weights = 0.10 * np.random.randn(n_inputs, n_neurons)
         self.biases = np.zeros((1, n_neurons))
 
     def forward(self, inputs):
+        # Compute the output of the layer as a weighted sum of inputs plus biases
         self.output = np.dot(inputs, self.weights) + self.biases
 
 
-# Rectified Linear Unit activation function
+# Rectified Linear Unit (ReLU) activation function
 class Activation_ReLU:
     def forward(self, inputs):
+        # Replaces negative values with 0
         self.output = np.maximum(0, inputs)
 
 
-# Converts raw scores (logits) into probabilities
+# Softmax activation function
+# Converts raw predictions to probabilities by normalising exponentiated values
 class Activation_Softmax:
     def forward(self, inputs):
-        # Subtract the maximum value of each set of inputs from the inputs themselves to prevent overflow.
-        # Exponentiate each stabilised input value to ensure all values are positive.
+        # For numerical stability, subtract the max value from inputs
         exp_values = np.exp(inputs - np.max(inputs, axis=1, keepdims=True))
-        # Normalise exponentiated values by dividing by the sum of exponentials for each set of inputs,
-        # producing a probability distribution.
+        # Normalize by dividing by the sum of exponentials to get probabilities
         probabilities = exp_values / np.sum(exp_values, axis=1, keepdims=True)
         self.output = probabilities
 
@@ -69,7 +70,7 @@ def build_model(X, y):
     dense1 = Layer_Dense(2, 3)
     activation1 = Activation_ReLU()
 
-    # n_inputs must be 3, as the previous layer has 3 neurons
+    # Hidden layer: 3 neurons -> 3 neurons
     dense2 = Layer_Dense(3, 3)
     activation2 = Activation_Softmax()
 
@@ -89,3 +90,15 @@ def build_model(X, y):
 
     # Print the loss value
     print("Loss:", loss)
+
+
+# Next steps
+# Training Loop:
+# Implement a training loop to adjust weights and biases based on the loss.
+# Use an optimization algorithm like gradient descent.
+
+# Backward Propagation:
+# Add the backward pass to compute gradients of weights and biases using the chain rule. This is necessary for updating the weights during training.
+
+#  -  Implement weight updates to minimize the loss, often using gradient descent or its variants.
+#  -  Evaluate the model's performance on unseen data.
