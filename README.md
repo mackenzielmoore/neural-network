@@ -5,9 +5,11 @@ Tradonaut is a trading system that uses neural networks to analyze stock market 
 ## Architecture
 
 - **Convolutional Neural Networks (CNNs):** Extract features from raw data and technical indicators.
+
 - **Long Short-Term Memory Networks (LSTMs):** Find correlation between time series data.
+
 - **Transformer-Based Architectures:** Capture long-term dependencies and contextual relationships.
-- **Trend Analysis Model (Optional):** Analyze larger time frame data to provide broader market context.
+
 - **Reinforcement Learning (RL) Model:** Optimize trading strategies and decision-making.
 
 ## Workflow
@@ -22,7 +24,7 @@ Tradonaut is a trading system that uses neural networks to analyze stock market 
 
 5. Optimize trading decisions with the RL model.
 
-6. Generate and execute trading signals, setting appropriate TP and SL levels.
+6. Generate and execute trading signals, setting appropriate Take Profit (TP) and Stop Loss (SL) levels.
 
 7. Test the integrated approach using historical data.
 
