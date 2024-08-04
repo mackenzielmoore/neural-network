@@ -1,51 +1,32 @@
 # Tradonaut
 
-Tradonaut is a neural network-based trading system designed for stock market analysis and signal generation. It utilizes advanced deep learning techniques to optimize scalp trading strategies by integrating real-time and historical stock data.
-
-## Project Overview
-
-Tradonaut leverages deep learning for scalp trading by incorporating a variety of data sources and neural network architectures. The system performs feature extraction, temporal and contextual analysis, and reinforcement learning to optimize trading strategies.
+Tradonaut is a trading system that uses neural networks to analyze stock market data and generate trading signals. It combines real-time and historical data with deep learning techniques to create and execute scalp trading strategies.
 
 ## Architecture
 
-The architecture of Tradonaut consists of a specialized set of neural network models:
+- **Convolutional Neural Networks (CNNs):** Extract features from raw data and technical indicators.
+- **Long Short-Term Memory Networks (LSTMs):** Find correlation between time series data.
+- **Transformer-Based Architectures:** Capture long-term dependencies and contextual relationships.
+- **Trend Analysis Model (Optional):** Analyze larger time frame data to provide broader market context.
+- **Reinforcement Learning (RL) Model:** Optimize trading strategies and decision-making.
 
-1. **Convolutional Neural Networks (CNNs):** For extracting features from raw stock data and technical indicators.
-2. **Long Short-Term Memory Networks (LSTMs):** For modeling temporal dependencies and trends in the data.
-3. **Transformer-Based Architectures:** For analyzing long-term dependencies and contextual relationships.
+## Workflow
 
-## Workflow and Features
+1. Collect and preprocess data from both 1-minute and larger time frames.
 
-1. **Data Collection and Preprocessing:**
+2. Extract features using CNNs for both time frames.
 
-   - Aggregate and preprocess real-time and historical stock data.
+3. Periodically perform trend analysis on larger time frame data.
 
-2. **Feature Extraction:**
+4. Feed CNN output, along with larger timeframe trend, into the LSTM or Transformer models.
 
-   - Apply CNNs to transform raw data into feature-rich representations.
+5. Optimize trading decisions with the RL model.
 
-3. **Sequence Modeling:**
+6. Generate and execute trading signals, setting appropriate TP and SL levels.
 
-   - Utilize LSTMs to analyze temporal patterns using CNN-extracted features.
+7. Test the integrated approach using historical data.
 
-4. **Contextual Analysis:**
-
-   - Employ Transformer models to enhance and contextualize the LSTM outputs.
-
-5. **Decision Making:**
-
-   - Integrate insights from CNNs, LSTMs, and Transformers into a reinforcement learning model to generate trading signals.
-
-6. **Reinforcement Learning-Based Training:**
-
-   - Optimize trading strategies through reinforcement learning, leveraging features and patterns identified by CNNs, LSTMs, and Transformers.
-
-7. **Backtesting and Paper Trading Capabilities:**
-
-   - Evaluate strategies with historical data and simulate trading scenarios.
-
-8. **Live Deployment and Monitoring:**
-   - Deploy trading strategies in live markets and monitor performance in real-time.
+8. Deploy the system live and monitor performance.
 
 ## Resources
 
